@@ -2,13 +2,16 @@
 -- Project Name: TPU
 -- Description: Constants for instruction forms, opcodes, conditional flags, etc.
 -- 
--- Revision: 1
+-- Revision: 1.5
 ----------------------------------------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 package tpu_constants is
+
+constant ADDR_RESET:    std_logic_vector(15 downto 0) :=  X"0000";
+constant ADDR_INTVEC:   std_logic_vector(15 downto 0) :=  X"0008";
 
 -- Opcodes
 constant OPCODE_ADD:    std_logic_vector(3 downto 0) :=  "0000";	-- ADD
@@ -25,8 +28,21 @@ constant OPCODE_SHL:    std_logic_vector(3 downto 0) :=  "1010";	-- SHL
 constant OPCODE_SHR:    std_logic_vector(3 downto 0) :=  "1011";  -- SHR 
 constant OPCODE_JUMP:   std_logic_vector(3 downto 0) :=  "1100";	-- JUMP 
 constant OPCODE_JUMPEQ: std_logic_vector(3 downto 0) :=  "1101";	-- JUMPEQ 
-constant OPCODE_RES1:   std_logic_vector(3 downto 0) :=  "1110";	-- RESERVED 
+constant OPCODE_SPEC:   std_logic_vector(3 downto 0) :=  "1110";	-- SPECIAL
 constant OPCODE_RES2:   std_logic_vector(3 downto 0) :=  "1111";  -- RESERVED 
+
+constant OPCODE_SPEC_F2_GETPC: std_logic_vector(1 downto 0) := "00";
+constant OPCODE_SPEC_F2_GETSTATUS: std_logic_vector(1 downto 0) := "01";
+constant OPCODE_SPEC_F2_INT: std_logic_vector(1 downto 0) := "10";
+
+constant OPCODE_SPEC_F2_GIEF: std_logic_vector(1 downto 0) := "00";
+constant OPCODE_SPEC_F2_BBI: std_logic_vector(1 downto 0) := "01";
+constant OPCODE_SPEC_F2_EI: std_logic_vector(1 downto 0) := "10";
+constant OPCODE_SPEC_F2_DI: std_logic_vector(1 downto 0) := "11";
+
+
+constant OPCODE_SPEC_F2_GETCOUNTLOW: std_logic_vector(1 downto 0) := "00";
+constant OPCODE_SPEC_F2_GETCOUNTHIGH: std_logic_vector(1 downto 0) := "01";
 
 -- Instruction Form Offsets
 constant IFO_OPCODE_BEGIN: integer := 15;
@@ -68,6 +84,11 @@ constant CMP_BIT_BZ: integer := 10;
 -- the bits are offset when writing the intermediate register
 constant CMP_BIT_OFFSET: integer := 0;
 
+-- PC unit opcodes
+constant PCU_OP_NOP: std_logic_vector(1 downto 0):= "00";
+constant PCU_OP_INC: std_logic_vector(1 downto 0):= "01";
+constant PCU_OP_ASSIGN: std_logic_vector(1 downto 0):= "10";
+constant PCU_OP_RESET: std_logic_vector(1 downto 0):= "11";
 
 end tpu_constants;
 
